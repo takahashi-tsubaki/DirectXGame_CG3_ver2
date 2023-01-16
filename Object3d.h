@@ -9,6 +9,8 @@
 #include "Model.h"
 #include "Camera.h"
 
+#include "Light.h"
+
 /// <summary>
 /// 3Dオブジェクト
 /// </summary>
@@ -37,7 +39,9 @@ public: // サブクラス
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
-		XMMATRIX mat;	// ３Ｄ変換行列
+		XMMATRIX viewproj; //ビュープロジェクション行列
+		XMMATRIX world;//ワールド行列
+		XMFLOAT3 cameraPos;//カメラ座標
 	};
 
 private: // 定数
@@ -108,6 +112,12 @@ public: // メンバ関数
 	const XMFLOAT3& GetPosition() { return position; }
 
 	/// <summary>
+	/// 回転角の取得
+	/// </summary>
+	/// <returns></returns>
+	const XMFLOAT3& GetRotation() { return rotation; }
+
+	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
@@ -129,6 +139,11 @@ public: // メンバ関数
 
 	void SetBillboard(bool isBillboard) { this->isBillboard = isBillboard; }
 
+	static void SetLight(Light*light)
+	{
+		Object3d::light = light;
+	}
+
 private: // メンバ変数
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	// 色
@@ -149,5 +164,8 @@ private: // メンバ変数
 	bool isBillboard = false;
 	// 定数バッファのマップ
 	ConstBufferDataB0* constMap = nullptr;
+
+	//ライト
+	static Light* light;
 };
 
