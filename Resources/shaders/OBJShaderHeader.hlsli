@@ -12,11 +12,25 @@ cbuffer cbuff1 : register(b1)
 	float3 m_specular : packoffset(c2); // スペキュラー係数
 	float m_alpha : packoffset(c2.w);	// アルファ
 }
+//cbuffer cbuff2 : register(b2)
+//{
+//	float3 lightv;
+//	float3 lightColor;
+//}
+
+struct DirLight
+{
+	float3 lightv;//方向の単位ベクトル
+	float3 lightColor;//ライト色
+	uint active;
+};
+
 cbuffer cbuff2 : register(b2)
 {
-	float3 lightv;
-	float3 lightColor;
+	float3 ambientColor;
+	DirLight dirLights[3];
 }
+
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
 struct VSOutput

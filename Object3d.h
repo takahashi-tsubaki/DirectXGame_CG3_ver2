@@ -9,7 +9,7 @@
 #include "Model.h"
 #include "Camera.h"
 
-#include "Light.h"
+#include "LightGroup.h"
 
 /// <summary>
 /// 3Dオブジェクト
@@ -139,9 +139,9 @@ public: // メンバ関数
 
 	void SetBillboard(bool isBillboard) { this->isBillboard = isBillboard; }
 
-	static void SetLight(Light*light)
+	static void SetLightGroup(LightGroup*lightGroup)
 	{
-		Object3d::light = light;
+		Object3d::lightGroup = lightGroup;
 	}
 
 private: // メンバ変数
@@ -166,6 +166,6 @@ private: // メンバ変数
 	ConstBufferDataB0* constMap = nullptr;
 
 	//ライト
-	static Light* light;
+	static LightGroup* lightGroup;
 };
 

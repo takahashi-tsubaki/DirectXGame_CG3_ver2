@@ -3,7 +3,7 @@
 #include <d3d12.h>
 #include <d3dx12.h>
 
-class Light
+class DirectionalLight
 {
 private:
 	// Microsoft::WRL::を省略
@@ -20,6 +20,8 @@ public:
 	{
 		XMVECTOR lightv;//ライトへの方向を表すベクトル
 		XMFLOAT3 lightColor;//ライトの色
+		//有効フラグ
+		unsigned int active;
 	};
 
 private://情的メンバ変数
@@ -41,6 +43,8 @@ private://メンバ変数
 	XMFLOAT3 lightcolor = { 1,1,1 };
 	//ダーティフラグ
 	bool dirty = false;
+	//有効フラグ
+	bool active = false;
 
 public:
 	/// <summary>
@@ -53,10 +57,33 @@ public:
 	/// </summary>
 	/// <param name="lightdir"></param>
 	void SetLightDir(const XMVECTOR& lightdir);
+
+	/// <summary>
+	/// ライト方向の取得
+	/// </summary>
+	XMVECTOR GetLightDir() { return lightdir; }
+
 	/// <summary>
 	/// ライト色をセット
 	/// </summary>
 	void SetLightColor(const XMFLOAT3 lightcolor);
+
+	/// <summary>
+	/// ライト色の取得
+	/// </summary>
+	XMFLOAT3 GetLightColor() { return lightcolor; }
+
+	/// <summary>
+	/// 有効フラグをセット
+	/// </summary>
+	/// <param name="active"></param>
+	inline void SetActive(bool active){this->active = active;}
+
+	/// <summary>
+	/// 有効チェック
+	/// </summary>
+	/// <returns></returns>
+	inline bool isActive() { return active; }
 
 	/// <summary>
 	/// 初期化
@@ -74,6 +101,6 @@ public:
 	void Draw(ID3D12GraphicsCommandList*cmdList,UINT rootParameterIndex);
 
 
-	static Light* Create();
+	static DirectionalLight* Create();
 };
 
