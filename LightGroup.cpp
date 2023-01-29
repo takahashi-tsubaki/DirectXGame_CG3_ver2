@@ -79,17 +79,31 @@ void LightGroup::TransfarConstBuffer()
 			//ライトが有効なら設定を転送
 			if (dirLights[i].isActive())
 			{
-				constMap->dirLight[i].active = 1;
-				constMap->dirLight[i].lightv = -dirLights[i].GetLightDir();
-				constMap->dirLight[i].lightColor = dirLights[i].GetLightColor();
+				constMap->dirLights[i].active = 1;
+				constMap->dirLights[i].lightv = -dirLights[i].GetLightDir();
+				constMap->dirLights[i].lightColor = dirLights[i].GetLightColor();
 			}
 			//ライトが有効なら転送しない
 			else
 			{
-				constMap->dirLight[i].active = 0;
+				constMap->dirLights[i].active = 0;
 			}
 		}
-
+		for (int i = 0; i < PointLightNum; i++)
+		{
+			//ライトが有効なら設定を転送
+			if (pointLights[i].isActive())
+			{
+				constMap->pointLights[i].active = 1;
+				constMap->pointLights[i].lightpos = pointLights[i].GetLightPos();
+				constMap->pointLights[i].lightcolor = pointLights[i].GetLightColor();
+				constMap->pointLights[i].lightatten = pointLights[i].GetLightAtten();
+			}
+			else
+			{
+				constMap->pointLights[i].active = 0;
+			}
+		}
 		constBuff->Unmap(0, nullptr);
 	}
 }
@@ -134,4 +148,31 @@ void LightGroup::DefaultLightSetting()
 	dirLights[2].SetLightColor({ 1.0f,1.0f,1.0f });
 	dirLights[2].SetLightDir({ -0.5f,+0.1f,-0.2f,0 });
 
+}
+
+void LightGroup::SetPointLightActive(int index, bool active)
+{
+	assert(0 <= index && index <= PointLightNum);
+	pointLights[index].SetActive(active);
+}
+
+void LightGroup::SetPointLightPos(int index, const XMFLOAT3& lightpos)
+{
+	assert(0 <= index && index <= PointLightNum);
+	pointLights[index].SetLightPos(lightpos);
+	dirty = true;
+}
+
+void LightGroup::SetPointLightColor(int index, const XMFLOAT3& lightcolor)
+{
+	assert(0 <= index && index <= PointLightNum);
+	pointLights[index].SetLightColor(lightcolor);
+	dirty = true;
+}
+
+void LightGroup::SetPointLightAtten(int index, const XMFLOAT3& lightatten)
+{
+	assert(0 <= index && index <= PointLightNum);
+	pointLights[index].SetLightAtten(lightatten);
+	dirty = true;
 }

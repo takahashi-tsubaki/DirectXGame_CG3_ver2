@@ -3,6 +3,7 @@
 #include <d3d12.h>
 #include <d3dx12.h>
 #include "DirectionalLight.h"
+#include "PointLight.h"
 class LightGroup
 {
 private:
@@ -17,6 +18,9 @@ private:
 public:
 	static const int DirLightNum = 3;
 
+	//点光源の数
+	static const int PointLightNum = 3;
+
 public://サブクラス
 	//定数バッファ用データ構造体
 	struct ConstBufferData
@@ -25,7 +29,9 @@ public://サブクラス
 		XMFLOAT3 ambientColor;
 		float pad1;
 		//平行光源用
-		DirectionalLight::ConstBufferData dirLight[DirLightNum];
+		DirectionalLight::ConstBufferData dirLights[DirLightNum];
+		//点光源用
+		PointLight::ConstBufferData pointLights[PointLightNum];
 	};
 
 private://情的メンバ変数
@@ -47,7 +53,11 @@ private://メンバ変数
 	DirectionalLight dirLights[DirLightNum];
 	//ダーティフラグ
 	bool dirty = false;
-public:
+	//点光源の配列
+	PointLight pointLights[PointLightNum];
+
+
+public://メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -101,5 +111,9 @@ public:
 	/// </summary>
 	void DefaultLightSetting();
 
+	void SetPointLightActive(int index, bool active);
+	void SetPointLightPos(int index, const XMFLOAT3& lightpos);
+	void SetPointLightColor(int index, const XMFLOAT3& lightcolor);
+	void SetPointLightAtten(int index, const XMFLOAT3& lightatten);
 };
 

@@ -18,6 +18,9 @@ cbuffer cbuff1 : register(b1)
 //	float3 lightColor;
 //}
 
+//点光源の数
+static const int POINTLIGHT_NUM = 3;
+
 struct DirLight
 {
 	float3 lightv;//方向の単位ベクトル
@@ -25,10 +28,19 @@ struct DirLight
 	uint active;
 };
 
+struct PointLight
+{
+	float3 lightpos;//ライト座標
+	float3 lightcolor;//ライト色
+	float3 lightatten;//ライト距離減衰係数
+	uint active;
+};
+
 cbuffer cbuff2 : register(b2)
 {
 	float3 ambientColor;
 	DirLight dirLights[3];
+	PointLight pointLights[POINTLIGHT_NUM];
 }
 
 

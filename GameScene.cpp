@@ -79,6 +79,16 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup = LightGroup::Create();
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
+
+	lightGroup->SetDirLightActive(0,false);
+	lightGroup->SetDirLightActive(1, false);
+	lightGroup->SetDirLightActive(2, false);
+	lightGroup->SetPointLightActive(0, true);
+
+	pointLightPos[0] = 0.5f;
+	pointLightPos[1] = 1.0f;
+	pointLightPos[2] = 0.0f;
+
 }
 
 void GameScene::Update()
@@ -100,8 +110,9 @@ void GameScene::Update()
 
 	lightGroup->Update();
 
+	//ImGuiの設定
 	{
-		lightGroup->SetAmbientColor(XMFLOAT3(ambientColor0));
+		/*lightGroup->SetAmbientColor(XMFLOAT3(ambientColor0));
 
 		lightGroup->SetDirLightDir(0,XMVECTOR({lightDir0[0],lightDir0[1],lightDir0[2],0}));
 		lightGroup->SetDirLightColor(0, XMFLOAT3(lightColor0));
@@ -110,7 +121,11 @@ void GameScene::Update()
 		lightGroup->SetDirLightColor(1, XMFLOAT3(lightColor1));
 
 		lightGroup->SetDirLightDir(2, XMVECTOR({ lightDir2[0],lightDir2[1],lightDir2[2],0 }));
-		lightGroup->SetDirLightColor(2, XMFLOAT3(lightColor2));
+		lightGroup->SetDirLightColor(2, XMFLOAT3(lightColor2));*/
+
+		lightGroup->SetPointLightPos(0,XMFLOAT3(pointLightPos));
+		lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor));
+		lightGroup->SetPointLightAtten(0, XMFLOAT3(pointLightAtten));
 
 	}
 }
@@ -122,7 +137,7 @@ void GameScene::Draw()
 	ImGui::SetWindowSize(ImVec2(500,200));
 
 
-	ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
+	/*ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
 
 	ImGui::InputFloat3("lightDir0",lightDir0);
 	ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
@@ -131,7 +146,11 @@ void GameScene::Draw()
 	ImGui::ColorEdit3("lightColor1", lightColor1, ImGuiColorEditFlags_Float);
 
 	ImGui::InputFloat3("lightDir2", lightDir2);
-	ImGui::ColorEdit3("lightColor2", lightColor2, ImGuiColorEditFlags_Float);
+	ImGui::ColorEdit3("lightColor2", lightColor2, ImGuiColorEditFlags_Float);*/
+
+	ImGui::ColorEdit3("pointLightColor",pointLightColor, ImGuiColorEditFlags_Float);
+	ImGui::InputFloat3("pointLightPos",pointLightPos);
+	ImGui::InputFloat3("pointLightAtten", pointLightAtten);
 
 	ImGui::End();
 
