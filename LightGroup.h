@@ -6,6 +6,7 @@
 #include "DirectionalLight.h"
 #include "PointLight.h"
 #include "SpotLight.h"
+#include "CircleShadow.h"
 class LightGroup
 {
 private:
@@ -24,7 +25,8 @@ public:
 	static const int PointLightNum = 3;
 	//スポットライトの数
 	static const int SpotLightNum = 3;
-
+	//丸影の数
+	static const int CircleShadowNum = 1;
 public://サブクラス
 	//定数バッファ用データ構造体
 	struct ConstBufferData
@@ -38,6 +40,8 @@ public://サブクラス
 		PointLight::ConstBufferData pointLights[PointLightNum];
 		//スポットライト用
 		SpotLight::ConstBufferData spotLights[SpotLightNum];
+		//丸影用
+		CircleShadow::ConstBufferData circleShadows[CircleShadowNum];
 	};
 
 private://情的メンバ変数
@@ -63,6 +67,8 @@ private://メンバ変数
 	PointLight pointLights[PointLightNum];
 	//スポットライトの配列
 	SpotLight spotLights[SpotLightNum];
+	//丸影の配列
+	CircleShadow circleShadows[CircleShadowNum];
 
 public://メンバ関数
 	/// <summary>
@@ -129,5 +135,12 @@ public://メンバ関数
 	void SetSpotLightColor(int index, const XMFLOAT3& lightcolor);
 	void SetSpotLightAtten(int index, const XMFLOAT3& lightatten);
 	void SetSpotLightFactorAngle(int index, const XMFLOAT2& lightFactorAngle);
+
+	void SetCircleShadowActive(int index, bool active);
+	void SetCircleShadowCasterPos(int index, const XMFLOAT3& casterpos);
+	void SetCircleShadowDir(int index, const XMVECTOR& lightdir);
+	void SetCircleShadowDistanceCasterLight(int index, float distanceCasterLight);
+	void SetCircleShadowAtten(int index, const XMFLOAT3& lightatten);
+	void SetCircleShadowFactorAngle(int index, const XMFLOAT2& lightFactorAngle);
 };
 

@@ -24,7 +24,8 @@ static const int DIRLIGHT_NUM = 3;
 static const int POINTLIGHT_NUM = 3;
 //スポットライトの数
 static const int SPOTLIGHT_NUM = 3;
-
+//丸影の数
+static const int CIRCLESHADOW_NUM = 1;
 
 struct DirLight
 {
@@ -51,6 +52,15 @@ struct SpotLight
 	uint active;
 };
 
+struct CircleShadow
+{
+	float3 dir;
+	float3 casterPos;
+	float distanceCasterLight;
+	float3 atten;
+	float2 factorAngleCos;//
+	uint active;
+};
 
 cbuffer cbuff2 : register(b2)
 {
@@ -58,6 +68,7 @@ cbuffer cbuff2 : register(b2)
 	DirLight dirLights[DIRLIGHT_NUM];
 	PointLight pointLights[POINTLIGHT_NUM];
 	SpotLight spotLights[SPOTLIGHT_NUM];
+	CircleShadow circleShadows[CIRCLESHADOW_NUM];
 
 }
 
