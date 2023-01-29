@@ -104,6 +104,23 @@ void LightGroup::TransfarConstBuffer()
 				constMap->pointLights[i].active = 0;
 			}
 		}
+		for (int i = 0; i < SpotLightNum; i++)
+		{
+			if (spotLights[i].isActive())
+			{
+				constMap->spotLights[i].active = 1;
+				constMap->spotLights[i].lightv = -spotLights[i].GetLightDir();
+				constMap->spotLights[i].lightpos = spotLights[i].GetLightPos();
+				constMap->spotLights[i].lightcolor = spotLights[i].GetLightColor();
+				constMap->spotLights[i].lightatten = spotLights[i].GetLightAtten();
+				constMap->spotLights[i].lightfactoranglecos = spotLights[i].GetLightFactorAngleCos();
+			}
+			else
+			{
+				constMap->spotLights[i].active = 0;
+			}
+		}
+
 		constBuff->Unmap(0, nullptr);
 	}
 }
@@ -174,5 +191,47 @@ void LightGroup::SetPointLightAtten(int index, const XMFLOAT3& lightatten)
 {
 	assert(0 <= index && index <= PointLightNum);
 	pointLights[index].SetLightAtten(lightatten);
+	dirty = true;
+}
+
+//スポットライト
+void LightGroup::SetSpotLightActive(int index, bool active)
+{
+	assert(0 <= index && index <= SpotLightNum);
+	spotLights[index].SetActive(active);
+}
+
+void LightGroup::SetSpotLightDir(int index, const XMVECTOR& lightdir)
+{
+	assert(0 <= index && index <= SpotLightNum);
+	spotLights[index].SetLightDir(lightdir);
+	dirty = true;
+}
+
+void LightGroup::SetSpotLightPos(int index, const XMFLOAT3& lightpos)
+{
+	assert(0 <= index && index <= SpotLightNum);
+	spotLights[index].SetLightPos(lightpos);
+	dirty = true;
+}
+
+void LightGroup::SetSpotLightColor(int index, const XMFLOAT3& lightcolor)
+{
+	assert(0 <= index && index <= SpotLightNum);
+	spotLights[index].SetLightColor(lightcolor);
+	dirty = true;
+}
+
+void LightGroup::SetSpotLightAtten(int index, const XMFLOAT3& lightatten)
+{
+	assert(0 <= index && index <= SpotLightNum);
+	spotLights[index].SetLightAtten(lightatten);
+	dirty = true;
+}
+
+void LightGroup::SetSpotLightFactorAngle(int index, const XMFLOAT2& lightFactorAngle)
+{
+	assert(0 <= index && index <= SpotLightNum);
+	spotLights[index].SetLightFactorAngle(lightFactorAngle);
 	dirty = true;
 }

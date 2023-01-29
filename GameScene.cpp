@@ -85,10 +85,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup->SetDirLightActive(2, false);
 	lightGroup->SetPointLightActive(0, true);
 
-	pointLightPos[0] = 0.5f;
-	pointLightPos[1] = 1.0f;
-	pointLightPos[2] = 0.0f;
-
+	lightGroup->SetPointLightActive(0, false);
+	lightGroup->SetPointLightActive(1, false);
+	lightGroup->SetPointLightActive(2, false);
+	lightGroup->SetSpotLightActive(0, true);
 }
 
 void GameScene::Update()
@@ -123,37 +123,52 @@ void GameScene::Update()
 		lightGroup->SetDirLightDir(2, XMVECTOR({ lightDir2[0],lightDir2[1],lightDir2[2],0 }));
 		lightGroup->SetDirLightColor(2, XMFLOAT3(lightColor2));*/
 
-		lightGroup->SetPointLightPos(0,XMFLOAT3(pointLightPos));
+		/*lightGroup->SetPointLightPos(0,XMFLOAT3(pointLightPos));
 		lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor));
-		lightGroup->SetPointLightAtten(0, XMFLOAT3(pointLightAtten));
+		lightGroup->SetPointLightAtten(0, XMFLOAT3(pointLightAtten));*/
 
+		lightGroup->SetSpotLightDir(0, XMVECTOR({ spotLightDir[0],spotLightDir[1],spotLightDir[2],0 }));
+		lightGroup->SetSpotLightPos(0,XMFLOAT3(spotLightPos));
+		lightGroup->SetSpotLightColor(0, XMFLOAT3(spotLightColor));
+		lightGroup->SetSpotLightAtten(0, XMFLOAT3(spotLightAtten));
+		lightGroup->SetSpotLightFactorAngle(0,XMFLOAT2(spotLightFactorAngle));
 	}
 }
 
 void GameScene::Draw()
 {
-	ImGui::Begin("Light");
-	ImGui::SetWindowPos(ImVec2(2,0));
-	ImGui::SetWindowSize(ImVec2(500,200));
+	{
+		ImGui::Begin("Light");
+		ImGui::SetWindowPos(ImVec2(2, 0));
+		ImGui::SetWindowSize(ImVec2(500, 200));
 
 
-	/*ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
+		/*ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
 
-	ImGui::InputFloat3("lightDir0",lightDir0);
-	ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
+		ImGui::InputFloat3("lightDir0",lightDir0);
+		ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
 
-	ImGui::InputFloat3("lightDir1", lightDir1);
-	ImGui::ColorEdit3("lightColor1", lightColor1, ImGuiColorEditFlags_Float);
+		ImGui::InputFloat3("lightDir1", lightDir1);
+		ImGui::ColorEdit3("lightColor1", lightColor1, ImGuiColorEditFlags_Float);
 
-	ImGui::InputFloat3("lightDir2", lightDir2);
-	ImGui::ColorEdit3("lightColor2", lightColor2, ImGuiColorEditFlags_Float);*/
+		ImGui::InputFloat3("lightDir2", lightDir2);
+		ImGui::ColorEdit3("lightColor2", lightColor2, ImGuiColorEditFlags_Float);*/
 
-	ImGui::ColorEdit3("pointLightColor",pointLightColor, ImGuiColorEditFlags_Float);
-	ImGui::InputFloat3("pointLightPos",pointLightPos);
-	ImGui::InputFloat3("pointLightAtten", pointLightAtten);
+		/*ImGui::ColorEdit3("pointLightColor",pointLightColor, ImGuiColorEditFlags_Float);
+		ImGui::InputFloat3("pointLightPos",pointLightPos);
+		ImGui::InputFloat3("pointLightAtten", pointLightAtten);*/
 
-	ImGui::End();
+		ImGui::InputFloat3("spotLightDir", spotLightDir);
+		ImGui::ColorEdit3("spotLightColor", spotLightColor, ImGuiColorEditFlags_Float);
+		ImGui::InputFloat3("spotLightPos", spotLightPos);
+		ImGui::InputFloat3("spotLightAtten", spotLightAtten);
+		ImGui::InputFloat2("spotLightFactorAngle", spotLightFactorAngle);
 
+
+		ImGui::End();
+
+	}
+	
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon->GetCommandList();
 
