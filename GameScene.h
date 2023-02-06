@@ -106,7 +106,7 @@ class GameScene {
 	float circleShadowDir[3] = { 0,-1,0 };
 	float circleShadowAtten[3] = { 0.5f,0.6f,0.0f };
 	float circleShadowFactorAngle[2] = { 0.0f,0.5f };
-	float fighterPos[3] = { 1,0.0f,0 };
+	float fighterPos[3] = { 5,1.0f,0 };
 
 
 

@@ -61,9 +61,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	// テクスチャ2番に読み込み
 	Sprite::LoadTexture(2, L"Resources/texture.png");
 
-	modelSkydome = Model::CreateFromOBJ("skydome");
+	/*modelSkydome = Model::CreateFromOBJ("skydome");*/
 	modelGround = Model::CreateFromOBJ("ground");
-	modelFighter = Model::CreateFromOBJ("chr_sword");
+	modelFighter = Model::CreateFromOBJ("player");
 
 	objSkydome->SetModel(modelSkydome);
 	objGround->SetModel(modelGround);
